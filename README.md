@@ -88,26 +88,30 @@ During the implementation of this project, I incorporated various concepts and t
 1. Clone the repository:
 
 ```bash
-git clone <repo_url>
-cd document-analyzer
+git clone https://github.com/mirayayerdem/document_analyzer_ec530_final_project.git
+cd document_analyzer_ec530_final_project
 ```
 
-2. Build and run with Docker:
+2. Create your env file :
+```bash
+cp .env.example .env
+```
+
+3. Edit env and inster your real openai key:
+```bash
+OPENAI_API_KEY=sk-your-real-openai-key
+```
+
+4. Build and run with Docker:
 
 ```bash
-docker build -t document-analyzer .
-docker run -p 8000:8000 document-analyzer
+docker-compose up --build
 ```
 
-3. Access the application:
+5. Access the application:
 
 - Visit `http://localhost:8000` to use the system.
 
-4. Run tests manually (optional):
-
-```bash
-pytest
-```
 
 ---
 
