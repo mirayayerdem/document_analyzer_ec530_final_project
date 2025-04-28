@@ -155,13 +155,11 @@ async def upload_file(file: UploadFile, user_id: str = Cookie(default=None), use
     content = await file.read()  
 
     await upload_csv(content, db) 
-    # ✅ Instead of RedirectResponse, return JS force reload
-    # ✅ Here you return the small HTML that shows a message and then redirects
     return HTMLResponse(content="""
     <html>
     <head><meta charset="utf-8"><title>Upload Success</title></head>
     <body style="text-align:center; margin-top: 50px;">
-        <h2>✅ Upload successful! Redirecting to Admin Dashboard...</h2>
+        <h2>Upload successful! Redirecting to Admin Dashboard...</h2>
         <script>
             setTimeout(function() {
                 window.location.href = '/admin_dashboard';
