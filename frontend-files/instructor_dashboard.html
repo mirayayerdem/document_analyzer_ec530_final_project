@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Instructor Dashboard</title>
+</head>
+<body>
+
+    <form action="/logout" method="get">
+        <button type="submit">Logout</button>
+    </form>
+
+    <h1>Instructor Dashboard</h1>
+
+    {% for class_info in classes_data %}
+        <h2>Class: {{ class_info.class.name }} ({{ class_info.class.year }} {{ class_info.class.semester.name }})</h2>
+        <ul>
+            {% for student_info in class_info.students %}
+                <li>
+                    <strong>{{ student_info.student.name }} ({{ student_info.student.email }})</strong>
+                    <ul>
+                        {% for assignment in student_info.assignments %}
+                        <li>
+                            File: {{ assignment.filename }} <br>
+                            Grade: {{ assignment.grade }} <br>
+                            Feedback: {{ assignment.feedback }} <br>
+                            <a href="/download/{{ assignment.id }}" target="_blank">Download Assignment</a><br><br>
+
+                            {% if assignment.comment %}
+                                <strong>Student Comment:</strong> {{ assignment.comment.student_comment }}<br>
+                                {% if assignment.comment.instructor_response %}
+                                    <strong>Instructor Response:</strong> {{ assignment.comment.instructor_response }}
+                                {% else %}
+                                    <!-- Instructor Response Form -->
+                                    <form action="/comment_response/{{ assignment.id }}" method="post" style="margin-top:10px;">
+                                        <textarea name="response_text" rows="3" cols="50" placeholder="Write your response..." required></textarea><br>
+                                        <button type="submit">Submit Response</button>
+                                    </form>
+                                {% endif %}
+                            {% else %}
+                                <em>No comment submitted by student yet.</em>
+                            {% endif %}
+
+                            <hr>
+                        </li>
+                        {% else %}
+                            <li>No assignments uploaded yet.</li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No classes assigned to you yet.</p>
+    {% endfor %}
+
+</body>
+</html>

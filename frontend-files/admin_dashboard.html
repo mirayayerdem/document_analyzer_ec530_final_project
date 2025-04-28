@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+
+    <form action="/logout" method="get" style="text-align: right;">
+        <button type="submit">Logout</button>
+    </form>
+    <form action="/admin_dashboard" method="get" style="text-align: right; margin-top: 10px;">
+        <button type="submit">Refresh</button>
+    </form>
+    <h1>Admin Dashboard</h1>
+
+    <form action="/upload_csv" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" required>
+        <button type="submit">Upload CSV</button>
+    </form>
+
+    <hr>
+
+    {% for class_info in classes_data %}
+        <h2>Class: {{ class_info.class.name }} ({{ class_info.class.year }} {{ class_info.class.semester.name }})</h2>
+        <p><strong>Instructor:</strong> {{ class_info.instructor.name }} ({{ class_info.instructor.email }})</p>
+
+        <ul>
+            {% for student_info in class_info.students %}
+                <li>
+                    <strong>Student:</strong> {{ student_info.student.name }} ({{ student_info.student.email }})
+                    <ul>
+                        {% for assignment in student_info.assignments %}
+                            <li>
+                                File: {{ assignment.filename }} <br>
+                                Grade: {{ assignment.grade }} <br>
+                                Feedback: {{ assignment.feedback }} <br>
+                                <a href="/download/{{ assignment.id }}" target="_blank">Download Assignment</a>
+                            </li>
+                        {% else %}
+                            <li>No assignments uploaded yet.</li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No classes found.</p>
+    {% endfor %}
+
+</body>
+</html>

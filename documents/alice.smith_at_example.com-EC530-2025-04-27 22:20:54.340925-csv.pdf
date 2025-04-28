@@ -1,0 +1,11 @@
+type,name,email,year,semester,instructor_email,student_emails
+student,Alice Smith,alice.smith@example.com,,,,
+student,Bob Johnson,bob.johnson@example.com,,,,
+student,Charlie Brown,charlie.brown@example.com,,,,
+student,Diana Prince,diana.prince@example.com,,,,
+student,Edward Elric,edward.elric@example.com,,,,
+instructor,Dr. John,john@example.com,,,,
+instructor,Dr. Jane,jane@example.com,,,,
+class,EC530,,2025,FALL,john@example.com,"alice.smith@example.com,bob.johnson@example.com"
+class,EC523,,2025,FALL,jane@example.com,"charlie.brown@example.com,diana.prince@example.com"
+class,EC504,,2025,SPRING,john@example.com,"edward.elric@example.com"

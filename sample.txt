@@ -1,0 +1,19 @@
+Example 1: Multiple Choice (Science)
+Q: What is the chemical symbol for gold?
+A) Au
+B) Ag
+C) Gd
+D) Go
+Answer: A) Au
+
+⸻
+
+Example 2: True/False (History)
+Q: The Great Wall of China was built in the 20th century.
+Answer: False
+
+⸻
+
+Example 3: Short Answer (Math)
+Q: What is the square root of 64?
+Answer: 8

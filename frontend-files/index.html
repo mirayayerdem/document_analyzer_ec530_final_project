@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document Analyzer</title>
+</head>
+<body>
+    <form action="/logout" method="get">
+        <button type="submit">Logout</button>
+    </form>
+
+    <h1>Upload Assignment</h1>
+
+    <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
+        <label for="class_name">Class Name:</label>
+        <select id="class_name" name="class_name" required>
+            {% for class_ in classes %}
+                <option value="{{ class_.name }}">{{ class_.name }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+
+        <input type="file" name="file" required>
+        <br><br>
+
+        <button type="submit">Upload</button>
+    </form>
+
+    <h2>Graded Assignments</h2>
+    <ul id="results"></ul>
+
+    <script>
+        async function fetchResults() {
+            const response = await fetch('/results');
+            const results = await response.json();
+            const list = document.getElementById('results');
+            list.innerHTML = '';
+            for (const item of results) {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <strong>${item.filename}</strong><br>
+                    Class: ${item.class_name}<br>
+                    Grade: ${item.grade}<br>
+                    Feedback: ${item.feedback}<br>
+                    <a href="/download/${item.id}" target="_blank">Download Assignment</a><br><br>
+                    
+                    ${item.comment ? `<strong>Your Comment:</strong> ${item.comment.student_comment || ''}<br>
+                    ${item.comment.instructor_response ? `<strong>Instructor Response:</strong> ${item.comment.instructor_response}` : ''}
+                    ` : `
+                    <form action="/comment/${item.id}" method="post" style="margin-top:10px;">
+                        <textarea name="comment_text" rows="3" cols="50" placeholder="Leave a comment about this assignment..." required></textarea><br>
+                        <button type="submit">Submit Comment</button>
+                    </form>
+                    `}
+                    <hr>
+                `;
+                list.appendChild(li);
+            }
+        }
+    
+        setInterval(fetchResults, 10000);
+        </script>
+</body>
+</html>
